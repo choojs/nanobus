@@ -2,7 +2,70 @@
 [![npm version][2]][3] [![build status][4]][5] [![test coverage][6]][7]
 [![downloads][8]][9] [![js-standard-style][10]][11]
 
-Tiny message bus
+Tiny message bus.
+
+## Usage
+```js
+var nanobus = require('nanobus')
+var bus = nanobus()
+
+bus.on('foo', function (color) {
+  console.log('color is', color)
+})
+
+bus.emit('foo', 'blue')
+```
+
+## FAQ
+### Why not use the Node API?
+We had the requirement for a `*` event to catch all calls, and figured we could
+improve the file size at the same time. This library is about 1/3rd the size of
+Node's version. And it was easy to build, so yeah good enough of an excuse hah.
+
+### How do I listen for replies?
+You can do this by using the `.once()` listener and establishing a convention
+around naming schemas.
+
+```js
+bus.on('foo', function (color) {
+  console.log('foo called')
+  bus.emit('foo:res')
+})
+
+bus.once('foo:res', function () {
+  console.log('response received')
+})
+bus.emit('foo')
+```
+
+### When shouldn't I use this package?
+If you're only writing code that runs inside Node and don't need a `'*'`
+listener, consider using the built-in event emitter API instead.
+
+### Are the emitters asynchronous?
+No. If you're interested in doing that, use something like
+[nanotick](https://github.com/yoshuawuyts/nanotick) to batch events and ensure
+they run asynchronously.
+
+## API
+### `bus = nanobus()`
+Create a new `nanobus` instance
+
+### `bus.emit(eventName, [data])`
+Emit an event. Arbitrary data can optionally be passed as an argument.
+
+### `bus.on(eventName, listener([data]))`
+Listen to an event. Listen to `'*'` if you want to subscribe to all events.
+
+### `bus.once(eventName, listener([data]))`
+Listen to an event, and clear it after it's been called once.
+
+### `bus.removeListener(eventName, listener)`
+Remove a specific listener to an event.
+
+### `bus.removeAllListeners([eventName])`
+Remove all listeners to an event. If no event name is passed, removes all
+listeners on the message bus.
 
 ## License
 [MIT](https://tldrlegal.com/license/mit-license)
