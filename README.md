@@ -55,10 +55,16 @@ Create a new `nanobus` instance
 Emit an event. Arbitrary data can optionally be passed as an argument.
 
 ### `bus.on(eventName, listener([data]))`
-Listen to an event. Listen to `'*'` if you want to subscribe to all events.
+Listen to an event.
+
+### `bus.on('*', listener(eventName, [data]))`
+Listen to `'*'` if you want to subscribe to all events.
 
 ### `bus.once(eventName, listener([data]))`
 Listen to an event, and clear it after it's been called once.
+
+### `bus.once('*', listener(eventName, [data]))`
+Listen to `'*'` if you want to subscribe to all events.
 
 ### `bus.removeListener(eventName, listener)`
 Remove a specific listener to an event.
