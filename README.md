@@ -69,6 +69,9 @@ Listen to `'*'` if you want to subscribe to all events.
 ### `bus.removeListener(eventName, listener)`
 Remove a specific listener to an event.
 
+### `listeners = bus.listeners(eventName)`
+Return all listeners for a given event
+
 ### `bus.removeAllListeners([eventName])`
 Remove all listeners to an event. If no event name is passed, removes all
 listeners on the message bus.

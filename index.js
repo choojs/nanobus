@@ -98,6 +98,21 @@ Nanobus.prototype.removeAllListeners = function (eventName) {
   return this
 }
 
+Nanobus.prototype.listeners = function (eventName) {
+  var listeners = this._listeners[eventName]
+  var onces = this._onces[eventName]
+  var ret = []
+  if (listeners) {
+    var ilength = listeners.length
+    for (var i = 0; i < ilength; i++) ret.push(listeners[i])
+  }
+  if (onces) {
+    var jlength = onces.length
+    for (var j = 0; j < jlength; j++) ret.push(onces[j])
+  }
+  return ret
+}
+
 Nanobus.prototype._emit = function (arr, eventName, data) {
   if (!data) {
     data = eventName
