@@ -57,7 +57,13 @@ Emit an event. Arbitrary data can optionally be passed as an argument.
 ### `bus.on(eventName, listener([data]))`
 Listen to an event.
 
+### `bus.addListener(eventName, listener(eventName, [data]))`
+Listen to an event.
+
 ### `bus.on('*', listener(eventName, [data]))`
+Listen to `'*'` if you want to subscribe to all events.
+
+### `bus.addListener('*', listener(eventName, [data]))`
 Listen to `'*'` if you want to subscribe to all events.
 
 ### `bus.once(eventName, listener([data]))`
