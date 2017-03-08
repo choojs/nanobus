@@ -32,7 +32,7 @@ Nanobus.prototype.emit = function (eventName, data) {
   return this
 }
 
-Nanobus.prototype.on = function (eventName, listener) {
+Nanobus.prototype.on = Nano.proptotype.addListener = function (eventName, listener) {
   assert.equal(typeof eventName, 'string', 'nanobus.on: eventName should be type string')
   assert.equal(typeof listener, 'function', 'nanobus.on: listener should be type function')
 
