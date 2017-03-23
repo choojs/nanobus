@@ -5,9 +5,7 @@ module.exports = Nanobus
 function Nanobus () {
   if (!(this instanceof Nanobus)) return new Nanobus()
   this._starListeners = []
-  this._starOnces = []
   this._listeners = {}
-  this._onces = {}
 }
 
 Nanobus.prototype.emit = function (eventName, data) {
@@ -16,19 +14,10 @@ Nanobus.prototype.emit = function (eventName, data) {
   if (this._starListeners.length) {
     this._emit(this._starListeners, eventName, data)
   }
-  if (this._starOnces.length) {
-    this._emit(this._starOnces, eventName, data)
-    this._starOnces = []
-  }
 
   var listeners = this._listeners[eventName]
   if (listeners && listeners.length) this._emit(listeners, data)
 
-  var onces = this._onces[eventName]
-  if (onces && onces.length) {
-    this._emit(onces, data)
-    this._onces[eventName] = []
-  }
   return this
 }
 
@@ -63,11 +52,9 @@ Nanobus.prototype.removeListener = function (eventName, listener) {
   assert.equal(typeof listener, 'function', 'nanobus.removeListener: listener should be type function')
 
   if (eventName === '*') {
-    if (remove(this._starOnces, listener)) return this
     if (remove(this._starListeners, listener)) return this
   } else {
     if (remove(this._listeners[eventName], listener)) return this
-    if (remove(this._onces[eventName], listener)) return this
   }
 
   function remove (arr, listener) {
@@ -84,31 +71,22 @@ Nanobus.prototype.removeAllListeners = function (eventName) {
   if (eventName) {
     if (eventName === '*') {
       this._starListeners = []
-      this._starOnces = []
     } else {
       this._listeners[eventName] = []
-      this._onces[eventName] = []
     }
   } else {
     this._starListeners = []
-    this._starOnces = []
     this._listeners = {}
-    this._onces = {}
   }
   return this
 }
 
 Nanobus.prototype.listeners = function (eventName) {
   var listeners = this._listeners[eventName]
-  var onces = this._onces[eventName]
   var ret = []
   if (listeners) {
     var ilength = listeners.length
     for (var i = 0; i < ilength; i++) ret.push(listeners[i])
-  }
-  if (onces) {
-    var jlength = onces.length
-    for (var j = 0; j < jlength; j++) ret.push(onces[j])
   }
   return ret
 }
