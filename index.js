@@ -49,11 +49,11 @@ Nanobus.prototype.once = function (eventName, listener) {
   assert.equal(typeof eventName, 'string', 'nanobus.once: eventName should be type string')
   assert.equal(typeof listener, 'function', 'nanobus.once: listener should be type function')
 
-  if (eventName === '*') {
-    this._starOnces.push(listener)
-  } else {
-    if (!this._onces[eventName]) this._onces[eventName] = []
-    this._onces[eventName].push(listener)
+  this.on(eventName, once)
+  var self = this
+  function once () {
+    listener.apply(self, arguments)
+    self.removeListener(eventName, once)
   }
   return this
 }
