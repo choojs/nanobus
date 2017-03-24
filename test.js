@@ -42,6 +42,25 @@ tape('nanobus', function (t) {
     bus.emit('foo:bar')
   })
 
+  t.test('should emit all messages once', function (t) {
+    t.plan(3)
+    var bus = nanobus()
+    bus.once('*', function (data) {
+      t.pass('called')
+    })
+
+    bus.on('foo:bar', function (data) {
+      t.pass('called foo:bar')
+    })
+
+    bus.on('foo:baz', function (data) {
+      t.pass('called foo:baz')
+    })
+
+    bus.emit('foo:bar')
+    bus.emit('foo:baz')
+  })
+
   t.test('should be able to remove listeners', function (t) {
     t.plan(3)
     var bus = nanobus()
