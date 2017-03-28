@@ -52,7 +52,8 @@ they run asynchronously.
 Create a new `nanobus` instance
 
 ### `bus.emit(eventName, [data])`
-Emit an event. Arbitrary data can optionally be passed as an argument.
+Emit an event. Arbitrary data can optionally be passed as an argument. `'*'`
+listeners run after named listeners.
 
 ### `bus.on(eventName, listener([data]))`
 Listen to an event.
