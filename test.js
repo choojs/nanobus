@@ -42,6 +42,34 @@ tape('nanobus', function (t) {
     bus.emit('foo:bar')
   })
 
+  t.test('should properly emit messages when using both once() and on() ', function (t) {
+    t.plan(2)
+    var bus = nanobus()
+    var i = 0
+
+    bus.once('foo:bar', function onceIncrement () {
+      i++
+    })
+
+    bus.on('foo:bar', function onIncrement () {
+      i++
+    })
+
+    bus.once('*', function wildcardOnceIncrement () {
+      i++
+    })
+
+    bus.on('*', function wildcardOnIncrement () {
+      i++
+    })
+
+    bus.emit('foo:bar')
+    t.equal(i, 4, 'incremented by once() and on()')
+
+    bus.emit('foo:bar')
+    t.equal(i, 6, 'incremented by on() only')
+  })
+
   t.test('should trigger wildcard once', function (t) {
     t.plan(3)
     var bus = nanobus()
