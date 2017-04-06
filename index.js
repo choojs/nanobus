@@ -11,11 +11,12 @@ function Nanobus () {
 Nanobus.prototype.emit = function (eventName, data) {
   assert.equal(typeof eventName, 'string', 'nanobus.emit: eventName should be type string')
 
-  var listeners = this._listeners[eventName]
+  var listeners = this.listeners(eventName)
   if (listeners && listeners.length) this._emit(listeners, data)
 
   if (this._starListeners.length) {
-    this._emit(this._starListeners, eventName, data)
+    var starListeners = this.listeners('*')
+    this._emit(starListeners, eventName, data)
   }
 
   return this
@@ -82,7 +83,7 @@ Nanobus.prototype.removeAllListeners = function (eventName) {
 }
 
 Nanobus.prototype.listeners = function (eventName) {
-  var listeners = this._listeners[eventName]
+  var listeners = (eventName === '*') ? this._starListeners : this._listeners[eventName]
   var ret = []
   if (listeners) {
     var ilength = listeners.length
