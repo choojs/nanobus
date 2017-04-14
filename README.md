@@ -56,22 +56,22 @@ Emit an event. Arbitrary data can optionally be passed as an argument. `'*'`
 listeners run after named listeners.
 
 ### `bus.on(eventName, listener([data]))`
-Listen to an event.
+### `bus.addListener(eventName, listener([data]))`
+Listen to an event. If the event name is `'*'` the listener signature is
+`listener(eventName, [data])`.
 
-### `bus.addListener(eventName, listener(eventName, [data]))`
-Listen to an event.
-
-### `bus.on('*', listener(eventName, [data]))`
-Listen to `'*'` if you want to subscribe to all events.
-
-### `bus.addListener('*', listener(eventName, [data]))`
-Listen to `'*'` if you want to subscribe to all events.
+### `bus.prependListener(eventName, listener([data]))`
+Listen to an event, but make sure it's pushed to the start of the listener
+queue. If the event name is `'*'` the listener signature is
+`listener(eventName, [data])`.
 
 ### `bus.once(eventName, listener([data]))`
-Listen to an event, and clear it after it's been called once.
+Listen to an event, and clear it after it's been called once.  If the event
+name is `'*'` the listener signature is `listener(eventName, [data])`.
 
-### `bus.once('*', listener(eventName, [data]))`
-Listen to `'*'` if you want to subscribe to all events.
+### `bus.prependOnceListener(eventName, listener([data]))`
+Listen to an event, and clear it after it's been called once.  If the event
+name is `'*'` the listener signature is `listener(eventName, [data])`.
 
 ### `bus.removeListener(eventName, listener)`
 Remove a specific listener to an event.
