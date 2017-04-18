@@ -31,6 +31,39 @@ tape('nanobus', function (t) {
     bus.emit('beep:boop')
   })
 
+  t.test('should prepend listeners', function (t) {
+    t.plan(2)
+    var i = 0
+    var bus = nanobus()
+    bus.on('foo:bar', function (data) {
+      t.equal(i, 1)
+    })
+
+    bus.prependListener('foo:bar', function (data) {
+      t.equal(i, 0)
+      i++
+    })
+
+    bus.emit('foo:bar')
+  })
+
+  t.test('should prepend once listeners', function (t) {
+    t.plan(3)
+    var i = 0
+    var bus = nanobus()
+    bus.on('foo:bar', function (data) {
+      t.equal(i, 1)
+    })
+
+    bus.prependOnceListener('foo:bar', function (data) {
+      t.equal(i, 0)
+      i++
+    })
+
+    bus.emit('foo:bar')
+    bus.emit('foo:bar')
+  })
+
   t.test('should emit messages once', function (t) {
     t.plan(1)
     var bus = nanobus()

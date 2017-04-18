@@ -36,12 +36,38 @@ Nanobus.prototype.on = Nanobus.prototype.addListener = function (eventName, list
   return this
 }
 
+Nanobus.prototype.prependListener = function (eventName, listener) {
+  assert.equal(typeof eventName, 'string', 'nanobus.prependListener: eventName should be type string')
+  assert.equal(typeof listener, 'function', 'nanobus.prependListener: listener should be type function')
+
+  if (eventName === '*') {
+    this._starListeners.unshift(listener)
+  } else {
+    if (!this._listeners[eventName]) this._listeners[eventName] = []
+    this._listeners[eventName].unshift(listener)
+  }
+  return this
+}
+
 Nanobus.prototype.once = function (eventName, listener) {
   assert.equal(typeof eventName, 'string', 'nanobus.once: eventName should be type string')
   assert.equal(typeof listener, 'function', 'nanobus.once: listener should be type function')
 
-  this.on(eventName, once)
   var self = this
+  this.on(eventName, once)
+  function once () {
+    listener.apply(self, arguments)
+    self.removeListener(eventName, once)
+  }
+  return this
+}
+
+Nanobus.prototype.prependOnceListener = function (eventName, listener) {
+  assert.equal(typeof eventName, 'string', 'nanobus.prependOnceListener: eventName should be type string')
+  assert.equal(typeof listener, 'function', 'nanobus.prependOnceListener: listener should be type function')
+
+  var self = this
+  this.prependListener(eventName, once)
   function once () {
     listener.apply(self, arguments)
     self.removeListener(eventName, once)
