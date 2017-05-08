@@ -4,7 +4,7 @@ var assert = require('assert')
 module.exports = Nanobus
 
 function Nanobus (name) {
-  if (!(this instanceof Nanobus)) return new Nanobus()
+  if (!(this instanceof Nanobus)) return new Nanobus(name)
 
   this._name = name || 'nanobus'
   this._starListeners = []
