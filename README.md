@@ -48,8 +48,10 @@ No. If you're interested in doing that, use something like
 they run asynchronously.
 
 ## API
-### `bus = nanobus()`
-Create a new `nanobus` instance
+### `bus = nanobus([name])`
+Create a new `nanobus` instance. Optionally takes a name that will be used for
+tracing in the browser using the `performance.mark` / `performance.measure`
+API.
 
 ### `bus.emit(eventName, [data])`
 Emit an event. Arbitrary data can optionally be passed as an argument. `'*'`

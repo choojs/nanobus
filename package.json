@@ -10,7 +10,9 @@
     "coverage": "nyc report --reporter=text-lcov > coverage.lcov",
     "bench": "node bench.js"
   },
-  "dependencies": {},
+  "dependencies": {
+    "nanotiming": "^1.0.1"
+  },
   "devDependencies": {
     "dependency-check": "^2.8.0",
     "nanobench": "^2.1.0",
