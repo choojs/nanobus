@@ -1,16 +1,22 @@
+var nanotiming = require('nanotiming')
 var assert = require('assert')
 
 module.exports = Nanobus
 
-function Nanobus () {
+function Nanobus (name) {
   if (!(this instanceof Nanobus)) return new Nanobus()
+
+  this._name = name || 'nanobus'
   this._starListeners = []
   this._listeners = {}
+
+  this._timing = nanotiming(this._name)
 }
 
 Nanobus.prototype.emit = function (eventName, data) {
   assert.equal(typeof eventName, 'string', 'nanobus.emit: eventName should be type string')
 
+  this._timing.start(eventName)
   var listeners = this._listeners[eventName]
   if (listeners && listeners.length > 0) {
     this._emit(this.listeners(eventName), data)
@@ -19,6 +25,7 @@ Nanobus.prototype.emit = function (eventName, data) {
   if (this._starListeners.length > 0) {
     this._emit(this.listeners('*'), eventName, data)
   }
+  this._timing.end(eventName)
 
   return this
 }
