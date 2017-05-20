@@ -11,7 +11,7 @@
     "bench": "node bench.js"
   },
   "dependencies": {
-    "nanotiming": "^1.0.1"
+    "nanotiming": "^5.0.0"
   },
   "devDependencies": {
     "dependency-check": "^2.8.0",
