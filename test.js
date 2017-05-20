@@ -234,4 +234,18 @@ tape('nanobus', function (t) {
       i++
     }
   })
+
+  t.test('should be able to remove listeners that have not been attached', function (t) {
+    var bus = nanobus()
+
+    t.doesNotThrow(function () {
+      bus.removeListener('yay', handler)
+    }, 'removes unattched "yay" event')
+    t.doesNotThrow(function () {
+      bus.removeListener('*', handler)
+    }, 'removes unattached "*" event')
+    t.end()
+
+    function handler () {}
+  })
 })

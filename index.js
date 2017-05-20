@@ -19,11 +19,11 @@ Nanobus.prototype.emit = function (eventName, data) {
   this._timing.start(eventName)
   var listeners = this._listeners[eventName]
   if (listeners && listeners.length > 0) {
-    this._emit(this.listeners(eventName), data)
+    this._emit(this._listeners[eventName], data)
   }
 
   if (this._starListeners.length > 0) {
-    this._emit(this.listeners('*'), eventName, data)
+    this._emit(this._starListeners, eventName, data)
   }
   this._timing.end(eventName)
 
@@ -87,9 +87,14 @@ Nanobus.prototype.removeListener = function (eventName, listener) {
   assert.equal(typeof listener, 'function', 'nanobus.removeListener: listener should be type function')
 
   if (eventName === '*') {
-    if (remove(this._starListeners, listener)) return this
+    this._starListeners = this._starListeners.slice()
+    return remove(this._starListeners, listener)
   } else {
-    if (remove(this._listeners[eventName], listener)) return this
+    if (typeof this._listeners[eventName] !== 'undefined') {
+      this._listeners[eventName] = this._listeners[eventName].slice()
+    }
+
+    return remove(this._listeners[eventName], listener)
   }
 
   function remove (arr, listener) {
@@ -127,6 +132,7 @@ Nanobus.prototype.listeners = function (eventName) {
 }
 
 Nanobus.prototype._emit = function (arr, eventName, data) {
+  if (typeof arr === 'undefined') return
   if (!data) {
     data = eventName
     eventName = null
