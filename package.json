@@ -11,7 +11,8 @@
     "bench": "node bench.js"
   },
   "dependencies": {
-    "nanotiming": "^5.0.0"
+    "nanotiming": "^5.0.0",
+    "remove-array-items": "^1.0.0"
   },
   "devDependencies": {
     "dependency-check": "^2.8.0",
