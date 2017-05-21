@@ -1,3 +1,4 @@
+var splice = require('remove-array-items')
 var nanotiming = require('nanotiming')
 var assert = require('assert')
 
@@ -99,7 +100,7 @@ Nanobus.prototype.removeListener = function (eventName, listener) {
     if (!arr) return
     var index = arr.indexOf(listener)
     if (index !== -1) {
-      arr.splice(index, 1)
+      splice(arr, index, 1)
       return true
     }
   }
