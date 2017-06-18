@@ -60,7 +60,7 @@ listeners run after named listeners.
 ### `bus.on(eventName, listener([data]))`
 ### `bus.addListener(eventName, listener([data]))`
 Listen to an event. If the event name is `'*'` the listener signature is
-`listener(eventName, [data])`.
+`listener(eventName, [data], [performanceTimingId])`.
 
 ### `bus.prependListener(eventName, listener([data]))`
 Listen to an event, but make sure it's pushed to the start of the listener
@@ -69,7 +69,8 @@ queue. If the event name is `'*'` the listener signature is
 
 ### `bus.once(eventName, listener([data]))`
 Listen to an event, and clear it after it's been called once.  If the event
-name is `'*'` the listener signature is `listener(eventName, [data])`.
+name is `'*'` the listener signature is
+`listener(eventName, [data], [performanceTimingId])`.
 
 ### `bus.prependOnceListener(eventName, listener([data]))`
 Listen to an event, and clear it after it's been called once.  If the event
