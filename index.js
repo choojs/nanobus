@@ -22,7 +22,7 @@ Nanobus.prototype.emit = function (eventName, data) {
   }
 
   if (this._starListeners.length > 0) {
-    this._emit(this._starListeners, eventName, data)
+    this._emit(this._starListeners, eventName, data, emitTiming.uuid)
   }
   emitTiming()
 
@@ -121,7 +121,10 @@ Nanobus.prototype.removeAllListeners = function (eventName) {
 }
 
 Nanobus.prototype.listeners = function (eventName) {
-  var listeners = (eventName !== '*') ? this._listeners[eventName] : this._starListeners
+  var listeners = eventName !== '*'
+    ? this._listeners[eventName]
+    : this._starListeners
+
   var ret = []
   if (listeners) {
     var ilength = listeners.length
@@ -130,16 +133,20 @@ Nanobus.prototype.listeners = function (eventName) {
   return ret
 }
 
-Nanobus.prototype._emit = function (arr, eventName, data) {
+Nanobus.prototype._emit = function (arr, eventName, data, uuid) {
   if (typeof arr === 'undefined') return
-  if (!data) {
+  if (data === undefined) {
     data = eventName
     eventName = null
   }
   var length = arr.length
   for (var i = 0; i < length; i++) {
     var listener = arr[i]
-    if (eventName) listener(eventName, data)
-    else listener(data)
+    if (eventName) {
+      if (uuid !== undefined) listener(eventName, data, uuid)
+      else listener(eventName, data)
+    } else {
+      listener(data)
+    }
   }
 }
