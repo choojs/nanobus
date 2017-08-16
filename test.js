@@ -15,7 +15,7 @@ tape('nanobus', function (t) {
   })
 
   t.test('should emit messages', function (t) {
-    t.plan(2)
+    t.plan(4)
     var bus = nanobus()
     var obj = { bin: 'baz' }
     bus.on('foo:bar', function (data) {
@@ -29,6 +29,13 @@ tape('nanobus', function (t) {
     })
 
     bus.emit('beep:boop')
+
+    bus.on('baz:floop', function (arg1, arg2) {
+      t.equal(arg1, 'arg1', 'data was same')
+      t.equal(arg2, 'arg2', 'data was same')
+    })
+
+    bus.emit('baz:floop', 'arg1', 'arg2')
   })
 
   t.test('should prepend listeners', function (t) {
