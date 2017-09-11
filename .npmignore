@@ -1,0 +1,4 @@
+.npmignore
+.travis.yml
+bench.js
+test.js
