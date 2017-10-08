@@ -32,7 +32,7 @@ tape('nanobus', function (t) {
   })
 
   t.test('should prepend listeners', function (t) {
-    t.plan(2)
+    t.plan(4)
     var i = 0
     var bus = nanobus()
     bus.on('foo:bar', function (data) {
@@ -45,6 +45,18 @@ tape('nanobus', function (t) {
     })
 
     bus.emit('foo:bar')
+
+    bus.on('*', function (data) {
+      t.equal(i, 1)
+    })
+
+    bus.prependListener('*', function (eventName, data) {
+      t.equal(i, data)
+      i++
+    })
+
+    i = 0
+    bus.emit('bar:baz', i)
   })
 
   t.test('should prepend once listeners', function (t) {
