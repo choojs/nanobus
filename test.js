@@ -32,7 +32,7 @@ tape('nanobus', function (t) {
   })
 
   t.test('should prepend listeners', function (t) {
-    t.plan(2)
+    t.plan(4)
     var i = 0
     var bus = nanobus()
     bus.on('foo:bar', function (data) {
@@ -45,6 +45,18 @@ tape('nanobus', function (t) {
     })
 
     bus.emit('foo:bar')
+
+    bus.on('*', function (data) {
+      t.equal(i, 1)
+    })
+
+    bus.prependListener('*', function (eventName, data) {
+      t.equal(i, data)
+      i++
+    })
+
+    i = 0
+    bus.emit('bar:baz', i)
   })
 
   t.test('should prepend once listeners', function (t) {
@@ -184,7 +196,7 @@ tape('nanobus', function (t) {
   })
 
   t.test('should be able to have * listeners', function (t) {
-    t.plan(11)
+    t.plan(12)
     var bus = nanobus()
     var i = 0
 
@@ -230,8 +242,16 @@ tape('nanobus', function (t) {
     bus.removeAllListeners()
     t.equal(i, 12, 'count 12')
 
+    bus.on('*', starHandler)
+    bus.emit('star:event', i)
+    bus.removeAllListeners()
+
     function handler (data) {
       i++
+    }
+
+    function starHandler (eventName, data) {
+      t.equal(data, i, 'data was same')
     }
   })
 
@@ -247,5 +267,23 @@ tape('nanobus', function (t) {
     t.end()
 
     function handler () {}
+  })
+
+  t.test('should be able to get an array of listeners', function (t) {
+    t.plan(2)
+    var bus = nanobus()
+
+    bus.on('foo', bar)
+    bus.on('foo', baz)
+
+    t.deepEqual(bus.listeners('foo'), [bar, baz])
+
+    bus.on('*', bar)
+    bus.on('*', baz)
+
+    t.deepEqual(bus.listeners('foo'), [bar, baz])
+
+    function bar (data) {}
+    function baz (data) {}
   })
 })
