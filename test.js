@@ -256,4 +256,22 @@ tape('nanobus', function (t) {
 
     function handler () {}
   })
+
+  t.test('should be able to get an array of listeners', function (t) {
+    t.plan(2)
+    var bus = nanobus()
+
+    bus.on('foo', bar)
+    bus.on('foo', baz)
+
+    t.deepEqual(bus.listeners('foo'), [bar, baz])
+
+    bus.on('*', bar)
+    bus.on('*', baz)
+
+    t.deepEqual(bus.listeners('foo'), [bar, baz])
+
+    function bar (data) {}
+    function baz (data) {}
+  })
 })
