@@ -184,7 +184,7 @@ tape('nanobus', function (t) {
   })
 
   t.test('should be able to have * listeners', function (t) {
-    t.plan(11)
+    t.plan(12)
     var bus = nanobus()
     var i = 0
 
@@ -230,8 +230,16 @@ tape('nanobus', function (t) {
     bus.removeAllListeners()
     t.equal(i, 12, 'count 12')
 
+    bus.on('*', starHandler)
+    bus.emit('star:event', i)
+    bus.removeAllListeners()
+
     function handler (data) {
       i++
+    }
+
+    function starHandler (eventName, data) {
+      t.equal(data, i, 'data was same')
     }
   })
 
