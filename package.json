@@ -6,7 +6,7 @@
   "scripts": {
     "deps": "dependency-check . && dependency-check . --extra --no-dev",
     "start": "node .",
-    "test": "standard && npm run deps && nyc node test.js",
+    "test": "standard && npm run deps && nyc node test.js && size-limit",
     "coverage": "nyc report --reporter=text-lcov > coverage.lcov",
     "bench": "node bench.js"
   },
@@ -18,11 +18,18 @@
     "dependency-check": "^2.8.0",
     "nanobench": "^2.1.0",
     "nyc": "^10.1.2",
+    "size-limit": "^0.11.2",
     "standard": "^8.6.0",
     "tape": "^4.6.3"
   },
   "keywords": [
     "event",
     "emit"
+  ],
+  "size-limit": [
+    {
+      "path": "index.js",
+      "limit": "5.6 KB"
+    }
   ]
 }
