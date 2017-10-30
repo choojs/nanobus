@@ -12,8 +12,13 @@ function Nanobus (name) {
   this._listeners = {}
 }
 
-Nanobus.prototype.emit = function (eventName, data) {
+Nanobus.prototype.emit = function (eventName) {
   assert.equal(typeof eventName, 'string', 'nanobus.emit: eventName should be type string')
+
+  var data = []
+  for (var i = 1, len = arguments.length; i < len; i++) {
+    data.push(arguments[i])
+  }
 
   var emitTiming = nanotiming(this._name + "('" + eventName + "')")
   var listeners = this._listeners[eventName]
@@ -139,14 +144,17 @@ Nanobus.prototype._emit = function (arr, eventName, data, uuid) {
     data = eventName
     eventName = null
   }
+
   var length = arr.length
   for (var i = 0; i < length; i++) {
     var listener = arr[i]
     if (eventName) {
-      if (uuid !== undefined) listener(eventName, data, uuid)
-      else listener(eventName, data)
-    } else {
-      listener(data)
+      if (uuid !== undefined) {
+        data = [eventName, uuid].concat(data)
+      } else {
+        data = [eventName].concat(data)
+      }
     }
+    listener.apply(listener, data)
   }
 }
