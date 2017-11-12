@@ -293,4 +293,36 @@ tape('nanobus', function (t) {
     function bar (data) {}
     function baz (data) {}
   })
+
+  t.test('should be able to trigger multiple listeners with same args', function (t) {
+    t.plan(6)
+    var obj = {foo: 'bar'}
+    var bus = nanobus()
+
+    bus.on('foo', function (data) {
+      t.deepEqual(data, obj)
+    })
+
+    bus.on('foo', function (data) {
+      t.deepEqual(data, obj)
+    })
+
+    bus.on('foo', function (data) {
+      t.deepEqual(data, obj)
+    })
+
+    bus.on('*', function (name, data) {
+      t.deepEqual(data, obj)
+    })
+
+    bus.on('*', function (name, data) {
+      t.deepEqual(data, obj)
+    })
+
+    bus.on('*', function (name, data) {
+      t.deepEqual(data, obj)
+    })
+
+    bus.emit('foo', obj)
+  })
 })
