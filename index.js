@@ -148,13 +148,16 @@ Nanobus.prototype._emit = function (arr, eventName, data, uuid) {
   var length = arr.length
   for (var i = 0; i < length; i++) {
     var listener = arr[i]
+    var eventData
     if (eventName) {
       if (uuid !== undefined) {
-        data = [eventName, uuid].concat(data)
+        eventData = [eventName, uuid].concat(data)
       } else {
-        data = [eventName].concat(data)
+        eventData = [eventName].concat(data)
       }
+    } else {
+      eventData = data
     }
-    listener.apply(listener, data)
+    listener.apply(listener, eventData)
   }
 }
