@@ -140,21 +140,23 @@ Nanobus.prototype.listeners = function (eventName) {
 
 Nanobus.prototype._emit = function (arr, eventName, data, uuid) {
   if (typeof arr === 'undefined') return
+  if (arr.length === 0) return
   if (data === undefined) {
     data = eventName
     eventName = null
   }
 
+  if (eventName) {
+    if (uuid !== undefined) {
+      data = [eventName, uuid].concat(data)
+    } else {
+      data = [eventName].concat(data)
+    }
+  }
+
   var length = arr.length
   for (var i = 0; i < length; i++) {
     var listener = arr[i]
-    if (eventName) {
-      if (uuid !== undefined) {
-        data = [eventName, uuid].concat(data)
-      } else {
-        data = [eventName].concat(data)
-      }
-    }
     listener.apply(listener, data)
   }
 }
