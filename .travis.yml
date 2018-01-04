@@ -7,3 +7,11 @@ sudo: false
 language: node_js
 script: "npm run test"
 after_success: "npm i -g codecov && npm run coverage && codecov"
+addons:
+  apt:
+    packages:
+      - xvfb
+install:
+  - export DISPLAY=':99.0'
+  - Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
+  - npm install

@@ -6,7 +6,9 @@
   "scripts": {
     "deps": "dependency-check . && dependency-check . --extra --no-dev",
     "start": "node .",
-    "test": "standard && npm run deps && nyc node test.js",
+    "test": "npm run test:node && npm run test:browser",
+    "test:node": "standard && npm run deps && nyc node test.js | tap-spec",
+    "test:browser": "browserify test.js | tape-run | tap-spec",
     "coverage": "nyc report --reporter=text-lcov > coverage.lcov",
     "bench": "node bench.js"
   },
@@ -15,11 +17,14 @@
     "remove-array-items": "^1.0.0"
   },
   "devDependencies": {
+    "browserify": "^15.0.0",
     "dependency-check": "^2.8.0",
     "nanobench": "^2.1.0",
     "nyc": "^10.1.2",
     "standard": "^8.6.0",
-    "tape": "^4.6.3"
+    "tap-spec": "^4.1.1",
+    "tape": "^4.6.3",
+    "tape-run": "^3.0.1"
   },
   "keywords": [
     "event",
