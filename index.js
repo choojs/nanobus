@@ -148,7 +148,7 @@ Nanobus.prototype._emit = function (arr, eventName, data, uuid) {
 
   if (eventName) {
     if (uuid !== undefined) {
-      data = [eventName, uuid].concat(data)
+      data = [eventName].concat(data, uuid)
     } else {
       data = [eventName].concat(data)
     }
