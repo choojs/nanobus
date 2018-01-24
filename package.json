@@ -13,15 +13,15 @@
     "bench": "node bench.js"
   },
   "dependencies": {
-    "nanotiming": "^6.0.0",
+    "nanotiming": "^7.2.0",
     "remove-array-items": "^1.0.0"
   },
   "devDependencies": {
-    "browserify": "^15.0.0",
-    "dependency-check": "^2.8.0",
+    "browserify": "^15.2.0",
+    "dependency-check": "^3.0.0",
     "nanobench": "^2.1.0",
-    "nyc": "^10.1.2",
-    "standard": "^8.6.0",
+    "nyc": "^11.4.1",
+    "standard": "^10.0.3",
     "tap-spec": "^4.1.1",
     "tape": "^4.6.3",
     "tape-run": "^3.0.1"
