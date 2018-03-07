@@ -4,9 +4,10 @@ var assert = require('assert')
 
 module.exports = Nanobus
 
-function Nanobus (name) {
+function Nanobus (name, opts) {
   if (!(this instanceof Nanobus)) return new Nanobus(name)
 
+  this.opts = opts || {}
   this._name = name || 'nanobus'
   this._starListeners = []
   this._listeners = {}
@@ -20,16 +21,19 @@ Nanobus.prototype.emit = function (eventName) {
     data.push(arguments[i])
   }
 
-  var emitTiming = nanotiming(this._name + "('" + eventName + "')")
+  if (this.opts.timing !== false) {
+    var emitTiming = nanotiming(this._name + "('" + eventName + "')")
+  }
   var listeners = this._listeners[eventName]
   if (listeners && listeners.length > 0) {
     this._emit(this._listeners[eventName], data)
   }
 
   if (this._starListeners.length > 0) {
-    this._emit(this._starListeners, eventName, data, emitTiming.uuid)
+    this._emit(this._starListeners, eventName, data,
+      (emitTiming ? emitTiming.uuid : undefined))
   }
-  emitTiming()
+  if (emitTiming) emitTiming()
 
   return this
 }
