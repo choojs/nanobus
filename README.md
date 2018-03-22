@@ -93,10 +93,10 @@ listeners on the message bus.
 [1]: https://nodejs.org/api/documentation.html#documentation_stability_index
 [2]: https://img.shields.io/npm/v/nanobus.svg?style=flat-square
 [3]: https://npmjs.org/package/nanobus
-[4]: https://img.shields.io/travis/yoshuawuyts/nanobus/master.svg?style=flat-square
-[5]: https://travis-ci.org/yoshuawuyts/nanobus
-[6]: https://img.shields.io/codecov/c/github/yoshuawuyts/nanobus/master.svg?style=flat-square
-[7]: https://codecov.io/github/yoshuawuyts/nanobus
+[4]: https://img.shields.io/travis/choojs/nanobus/master.svg?style=flat-square
+[5]: https://travis-ci.org/choojs/nanobus
+[6]: https://img.shields.io/codecov/c/github/choojs/nanobus/master.svg?style=flat-square
+[7]: https://codecov.io/github/choojs/nanobus
 [8]: http://img.shields.io/npm/dm/nanobus.svg?style=flat-square
 [9]: https://npmjs.org/package/nanobus
 [10]: https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat-square
