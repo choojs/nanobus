@@ -3,8 +3,11 @@
   "description": "Tiny message bus",
   "repository": "choojs/nanobus",
   "version": "4.3.3",
+  "browser": {
+    "assert": "nanoassert"
+  },
   "scripts": {
-    "deps": "dependency-check . && dependency-check . --extra --no-dev",
+    "deps": "dependency-check . && dependency-check . --extra --no-dev -i nanoassert",
     "start": "node .",
     "test": "npm run test:node && npm run test:browser",
     "test:node": "standard && npm run deps && nyc node test.js | tap-spec",
@@ -13,6 +16,7 @@
     "bench": "node bench.js"
   },
   "dependencies": {
+    "nanoassert": "^1.1.0",
     "nanotiming": "^7.2.0",
     "remove-array-items": "^1.0.0"
   },
