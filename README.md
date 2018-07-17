@@ -80,11 +80,13 @@ name is `'*'` the listener signature is `listener(eventName, [data])`.
 Remove a specific listener to an event.
 
 ### `listeners = bus.listeners(eventName)`
-Return all listeners for a given event
+Return all listeners for a given event. `'*'` listeners are not included in
+this list. Use `bus.listeners('*')` to get a list of `'*'` listeners.
 
 ### `bus.removeAllListeners([eventName])`
 Remove all listeners to an event. If no event name is passed, removes all
-listeners on the message bus.
+listeners on the message bus. `'*'` listeners are not removed unless
+`eventName` is `*` or no event name is passed.
 
 ## License
 [MIT](https://tldrlegal.com/license/mit-license)
