@@ -1,19 +1,9 @@
 {
   "name": "nanobus",
   "description": "Tiny message bus",
-  "repository": "choojs/nanobus",
   "version": "4.3.3",
   "browser": {
     "assert": "nanoassert"
-  },
-  "scripts": {
-    "deps": "dependency-check . && dependency-check . --extra --no-dev -i nanoassert",
-    "start": "node .",
-    "test": "npm run test:node && npm run test:browser",
-    "test:node": "standard && npm run deps && nyc node test.js | tap-spec",
-    "test:browser": "browserify test.js | tape-run | tap-spec",
-    "coverage": "nyc report --reporter=text-lcov > coverage.lcov",
-    "bench": "node bench.js"
   },
   "dependencies": {
     "nanoassert": "^1.1.0",
@@ -31,7 +21,18 @@
     "tape-run": "^3.0.1"
   },
   "keywords": [
-    "event",
-    "emit"
-  ]
+    "emit",
+    "event"
+  ],
+  "license": "MIT",
+  "repository": "choojs/nanobus",
+  "scripts": {
+    "bench": "node bench.js",
+    "coverage": "nyc report --reporter=text-lcov > coverage.lcov",
+    "deps": "dependency-check . && dependency-check . --extra --no-dev -i nanoassert",
+    "start": "node .",
+    "test": "npm run test:node && npm run test:browser",
+    "test:browser": "browserify test.js | tape-run | tap-spec",
+    "test:node": "standard && npm run deps && nyc node test.js | tap-spec"
+  }
 }
