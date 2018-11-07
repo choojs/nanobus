@@ -20,7 +20,7 @@ Nanobus.prototype.emit = function (eventName) {
     data.push(arguments[i])
   }
 
-  var emitTiming = nanotiming(this._name + "('" + eventName + "')")
+  var emitTiming = nanotiming(this._name + "('" + eventName.toString() + "')")
   var listeners = this._listeners[eventName]
   if (listeners && listeners.length > 0) {
     this._emit(this._listeners[eventName], data)
