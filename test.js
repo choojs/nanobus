@@ -3,7 +3,7 @@ var nanobus = require('./')
 
 tape('nanobus', function (t) {
   t.test('should assert input types', function (t) {
-    t.plan(7)
+    t.plan(11)
     var bus = nanobus()
     t.throws(bus.emit.bind(bus), /string/)
     t.throws(bus.on.bind(bus), /string/)
@@ -12,6 +12,13 @@ tape('nanobus', function (t) {
     t.throws(bus.once.bind(bus, 'foo'), /function/)
     t.throws(bus.removeListener.bind(bus), /string/)
     t.throws(bus.removeListener.bind(bus, 'foo'), /function/)
+
+    var s = Symbol('event')
+    var fn = function () {}
+    t.doesNotThrow(bus.emit.bind(bus, s))
+    t.doesNotThrow(bus.on.bind(bus, s, fn))
+    t.doesNotThrow(bus.once.bind(bus, s, fn))
+    t.doesNotThrow(bus.removeListener.bind(bus, s, fn))
   })
 
   t.test('should emit messages', function (t) {
