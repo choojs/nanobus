@@ -1,11 +1,13 @@
 node_js:
 - "4"
-- "5"
 - "6"
-- "7"
-sudo: false
+- "8"
+- "10"
+- "stable"
 language: node_js
-script: "npm run test"
+script:
+  - npm run ci
+  - 'if [ "$TRAVIS_NODE_VERSION" = "stable" ]; then npm run deps; fi'
 after_success: "npm i -g codecov && npm run coverage && codecov"
 addons:
   apt:

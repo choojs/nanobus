@@ -33,6 +33,7 @@
     "start": "node .",
     "test": "npm run test:node && npm run test:browser",
     "test:browser": "browserify test.js | tape-run | tap-spec",
-    "test:node": "standard && npm run deps && nyc node test.js | tap-spec"
+    "test:node": "standard && npm run deps && nyc node test.js | tap-spec",
+    "ci": "standard && nyc node test.js | tap-spec && npm run test:browser"
   }
 }
