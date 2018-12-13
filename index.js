@@ -13,14 +13,14 @@ function Nanobus (name) {
 }
 
 Nanobus.prototype.emit = function (eventName) {
-  assert.equal(typeof eventName, 'string', 'nanobus.emit: eventName should be type string')
+  assert.ok(typeof eventName === 'string' || typeof eventName === 'symbol', 'nanobus.emit: eventName should be type string or symbol')
 
   var data = []
   for (var i = 1, len = arguments.length; i < len; i++) {
     data.push(arguments[i])
   }
 
-  var emitTiming = nanotiming(this._name + "('" + eventName + "')")
+  var emitTiming = nanotiming(this._name + "('" + eventName.toString() + "')")
   var listeners = this._listeners[eventName]
   if (listeners && listeners.length > 0) {
     this._emit(this._listeners[eventName], data)
@@ -35,7 +35,7 @@ Nanobus.prototype.emit = function (eventName) {
 }
 
 Nanobus.prototype.on = Nanobus.prototype.addListener = function (eventName, listener) {
-  assert.equal(typeof eventName, 'string', 'nanobus.on: eventName should be type string')
+  assert.ok(typeof eventName === 'string' || typeof eventName === 'symbol', 'nanobus.on: eventName should be type string or symbol')
   assert.equal(typeof listener, 'function', 'nanobus.on: listener should be type function')
 
   if (eventName === '*') {
@@ -48,7 +48,7 @@ Nanobus.prototype.on = Nanobus.prototype.addListener = function (eventName, list
 }
 
 Nanobus.prototype.prependListener = function (eventName, listener) {
-  assert.equal(typeof eventName, 'string', 'nanobus.prependListener: eventName should be type string')
+  assert.ok(typeof eventName === 'string' || typeof eventName === 'symbol', 'nanobus.prependListener: eventName should be type string or symbol')
   assert.equal(typeof listener, 'function', 'nanobus.prependListener: listener should be type function')
 
   if (eventName === '*') {
@@ -61,7 +61,7 @@ Nanobus.prototype.prependListener = function (eventName, listener) {
 }
 
 Nanobus.prototype.once = function (eventName, listener) {
-  assert.equal(typeof eventName, 'string', 'nanobus.once: eventName should be type string')
+  assert.ok(typeof eventName === 'string' || typeof eventName === 'symbol', 'nanobus.once: eventName should be type string or symbol')
   assert.equal(typeof listener, 'function', 'nanobus.once: listener should be type function')
 
   var self = this
@@ -74,7 +74,7 @@ Nanobus.prototype.once = function (eventName, listener) {
 }
 
 Nanobus.prototype.prependOnceListener = function (eventName, listener) {
-  assert.equal(typeof eventName, 'string', 'nanobus.prependOnceListener: eventName should be type string')
+  assert.ok(typeof eventName === 'string' || typeof eventName === 'symbol', 'nanobus.prependOnceListener: eventName should be type string or symbol')
   assert.equal(typeof listener, 'function', 'nanobus.prependOnceListener: listener should be type function')
 
   var self = this
@@ -87,7 +87,7 @@ Nanobus.prototype.prependOnceListener = function (eventName, listener) {
 }
 
 Nanobus.prototype.removeListener = function (eventName, listener) {
-  assert.equal(typeof eventName, 'string', 'nanobus.removeListener: eventName should be type string')
+  assert.ok(typeof eventName === 'string' || typeof eventName === 'symbol', 'nanobus.removeListener: eventName should be type string or symbol')
   assert.equal(typeof listener, 'function', 'nanobus.removeListener: listener should be type function')
 
   if (eventName === '*') {
