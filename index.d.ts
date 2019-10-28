@@ -11,9 +11,9 @@ declare class Nanobus<Events extends EventsConfiguration> {
 
   /**
    * Allowed events and the arguments that go with them should be specified by passing an interface in which each entry's key defines an event name, and each entry's value defines the signature for a listener for the event.
-   * 
+   *
    * For example:
-   * 
+   *
    * ```
    * const emitter = new Nanobus<{
    *   start: (options: Options) => void,
@@ -22,23 +22,23 @@ declare class Nanobus<Events extends EventsConfiguration> {
    *   result: (part1: number, part2: number) => void,
    * }>()
    * ```
-   * 
+   *
    * This will cause emissions and subscriptions to be type-checked.
-   * 
+   *
    * For example, this call would be allowed:
-   * 
+   *
    * ```
    * emitter.emit('error', new Error('something failed'))
    * ```
-   * 
+   *
    * This call would be disallowed because the event name isn't allowed:
-   * 
+   *
    * ```
    * emitter.emit('complete')
    * ```
-   * 
+   *
    * This call would be disallowed because `part2` must be a number, but isn't:
-   * 
+   *
    * ```
    * emitter.emit('result', 1, 'text')
    * ```
