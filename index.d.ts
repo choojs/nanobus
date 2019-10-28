@@ -1,4 +1,4 @@
-type EventsConfiguration = { [eventName: string | Symbol]: (...args: any[]) => void }
+type EventsConfiguration = { [eventName: string]: (...args: any[]) => void }
 type StarListener<Events extends EventsConfiguration> = <EventName extends keyof Events>(eventName: EventName, ...args: Parameters<Events[EventName]>) => void
 type AttachListener<Events extends EventsConfiguration> = <EventName extends (keyof Events) | '*'>(eventName: EventName, listener: EventName extends '*' ? StarListener<Events> : Events[EventName]) => Nanobus<Events>
 
