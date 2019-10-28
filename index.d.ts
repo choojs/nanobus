@@ -51,7 +51,7 @@ declare class Nanobus<Events extends EventsConfiguration> {
   once: AttachListener<Events>
   prependOnceListener: AttachListener<Events>
   removeListener<EventName extends keyof Events, Listener extends Events[EventName]>(eventName: EventName, listener: Listener): true | void
-  removeListener(eventName: '*', listener: StarListener): true | void
+  removeListener(eventName: '*', listener: StarListener<Events>): true | void
   removeAllListeners<EventName extends keyof Events>(eventName: EventName): this
   removeAllListeners(eventName: '*'): this
   listeners<EventName extends keyof Events>(eventName: EventName): Array<Events[EventName]>
