@@ -5,8 +5,8 @@ type AttachListener<Events extends EventsConfiguration> = <EventName extends (ke
 declare class Nanobus<Events extends EventsConfiguration> {
   private _name: string
   private _starListeners: Array<StarListener<Events>>
-  private _listeners: { [key: keyof Events]: Array<Events[keyof Events]> }
-  private _emit<EventName extends keyof Events>(listeners: Array<Events[infer EventName]>, data: Parameters<Events[EventName]>): void
+  private _listeners: { [key in keyof Events]: Array<Events[keyof Events]> }
+  private _emit<EventName extends keyof Events>(listeners: Array<Events[EventName]>, data: Parameters<Events[EventName]>): void
   private _emit<EventName extends keyof Events>(listeners: Array<StarListener<Events>>, eventName: EventName, data: Parameters<Events[EventName]>, uuid?: number)
 
   /**
