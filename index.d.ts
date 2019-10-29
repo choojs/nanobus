@@ -2,7 +2,7 @@ type EventsConfiguration = { [eventName: string]: (...args: any[]) => void }
 type StarListener<Events extends EventsConfiguration> = <EventName extends keyof Events>(eventName: EventName, ...args: Parameters<Events[EventName]>) => void
 type AttachListener<Events extends EventsConfiguration> = <EventName extends (keyof Events) | '*'>(eventName: EventName, listener: EventName extends '*' ? StarListener<Events> : Events[EventName]) => Nanobus<Events>
 
-declare class Nanobus<Events extends EventsConfiguration> {
+declare class Nanobus<Events extends EventsConfiguration = EventsConfiguration> {
   private _name: string
   private _starListeners: Array<StarListener<Events>>
   private _listeners: { [key in keyof Events]: Array<Events[keyof Events]> }
