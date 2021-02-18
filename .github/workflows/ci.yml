@@ -33,7 +33,12 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: ${{matrix.node-version}}
+      - name: Install Xvfb
+        run: sudo apt-get install xvfb
       - name: Install dependencies
         run: npm install
       - name: Run tests
-        run: npm run test-ci
+        run: |
+          xvfb --auto-servernum npm run tests-only
+      - name: Cleanup xvfb pids
+        uses: bcomnes/cleanup-xvfb@v1

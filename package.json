@@ -35,7 +35,6 @@
     "test:browser": "browserify test.js | tape-run | tap-spec",
     "test:node": "nyc node test.js | tap-spec",
     "tests-only": "npm run test:node && npm run test:browser",
-    "test": "npm run deps && npm run lint && npm run tests-only",
-    "test-ci": "nyc node test.js | tap-spec && npm run test:browser"
+    "test": "npm run deps && npm run lint && npm run tests-only"
   }
 }
