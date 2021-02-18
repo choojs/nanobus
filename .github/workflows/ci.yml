@@ -1,0 +1,44 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  lint:
+    name: Code style
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v2
+      - name: Install Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 14.x
+      - name: Install dependencies
+        run: npm install
+      - name: Check dependencies
+        run: npm run deps
+      - name: Check code style
+        run: npm run lint
+
+  test:
+    name: Tests
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [10.x, 12.x, 14.x, 15.x]
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v2
+      - name: Install Node.js ${{matrix.node-version}}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{matrix.node-version}}
+      - name: Install Xvfb
+        run: sudo apt-get install xvfb
+      - name: Install dependencies
+        run: npm install
+      - name: Run tests
+        run: |
+          xvfb-run --auto-servernum npm run tests-only
+      - name: Cleanup xvfb pids
+        uses: bcomnes/cleanup-xvfb@v1
