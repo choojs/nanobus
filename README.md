@@ -88,6 +88,50 @@ Remove all listeners to an event. If no event name is passed, removes all
 listeners on the message bus. `'*'` listeners are not removed unless
 `eventName` is `*` or no event name is passed.
 
+## TypeScript
+
+Optional event typing is available in TypeScript by passing an object type with 
+event names as keys and event listener function signatures as values.
+
+```ts
+// if compilerOptions.esModuleInterop = true
+import Nanobus from "nanobus"
+// else
+import Nanobus = require("nanobus") 
+
+type Events = {
+    foo: (color: string) => void
+    bar: (count: number) => void
+}
+
+const bus = new Nanobus<Events>()
+
+bus.on("foo", color => {
+    // color: string
+    console.log("color is", color)
+})
+
+bus.on("bar", count => {
+    // count: number
+    console.log("count is", count)
+})
+
+bus.on("*", (eventName, data) => {
+    // eventName: "foo" | "bar"
+    // data: any[]
+    if (eventName === "foo") {
+        const [color] = data as Parameters<Events["foo"]>
+        // color: string
+    } else if (eventName === "bar") {
+        const [count] = data as Parameters<Events["bar"]>
+        // count: number
+    }
+})
+
+bus.emit("foo", "blue")  // required arguments: [string]
+bus.emit("bar", 100)  // required arguments: [number]
+```
+
 ## License
 [MIT](https://tldrlegal.com/license/mit-license)
 
